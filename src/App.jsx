@@ -23,7 +23,7 @@ import AdminSettings from "./pages/AdminSettings";
 import AdminLeagues from "./pages/AdminLeagues";
 import AdminTeams from "./pages/AdminTeams";
 import AdminMatches from "./pages/AdminMatches";
-
+import About from "./pages/About"
 
 
 const AppRoutes = () => {
@@ -44,6 +44,8 @@ const AppRoutes = () => {
       <Route path="/" element={<Homepage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/about" element={<About />} />
+
 
       {/* Korumalı rotalar */}
       <Route path="/menu" element={user ? <Menu /> : <Navigate to="/login" />} />
@@ -51,6 +53,7 @@ const AppRoutes = () => {
       <Route path="/quiz" element={user ? <Quiz /> : <Navigate to="/login" />} />
       <Route path="/scoreboard" element={user ? <Scoreboard /> : <Navigate to="/login" />} />
       <Route path="/teams" element={user ? <Teams /> : <Navigate to="/login" />} />
+      
 
       {/* 🔒 Admin rotaları */}
       <Route path="/admin" element={isAdmin ? <AdminDashboard /> : <Navigate to="/" />} />

@@ -17,7 +17,8 @@
   z-index: 1000;
   background: transparent;
   transition: all 0.3s ease;
-  padding: 1.2rem 0;
+  /* padding: 1.2rem 0; */
+  height: 88px;
 }
 
 .navbar.scrolled {
@@ -35,6 +36,7 @@
   padding: 0 2rem;
   max-width: 1400px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .logo {
@@ -254,7 +256,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
   box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.05);
 }
 
@@ -269,9 +271,11 @@
   text-decoration: none;
   position: relative;
   transition: all 0.4s ease;
-  height: 100%;
   letter-spacing: 0.4px;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
+  height: 100%;
+  line-height: 80px; /* Dikey ortalamayı daha iyi sağlar */
+
 }
 
 .nav-links a:last-child {

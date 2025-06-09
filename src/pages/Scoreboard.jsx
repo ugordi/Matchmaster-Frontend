@@ -58,7 +58,7 @@ const Scoreboard = () => {
         <td>
           <div className="rank">
             <div className="rank-number">{index + 1}</div>
-            <span>{user.first_name} {user.last_name}</span>
+            <span>{user.username}</span>
           </div>
         </td>
         <td className="point-cell">{type === "monthly" ? user.monthly_points : user.seasonal_points}</td>
