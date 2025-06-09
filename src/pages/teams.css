@@ -1,0 +1,88 @@
+/* === Takımlar Sayfası (team.css) === */
+
+.teams-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 100px auto 2rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+}
+
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.team-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.team-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--hover-bg);
+  padding: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.team-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.favorite-button {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.favorite-button:hover {
+  color: #ffd700;
+}
+
+.favorite-button.active {
+  color: #ffd700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .teams-page {
+    padding: 1rem;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
+  }
+}

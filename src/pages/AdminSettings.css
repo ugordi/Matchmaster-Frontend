@@ -1,0 +1,95 @@
+/* Sayfa düzeni */
+.admin-settings-page {
+  display: flex;
+  height: 100vh;
+  background-color: #f3f4f6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ana içerik alanı */
+.admin-main-content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+  background-color: #f9fafb;
+}
+
+/* Başlık */
+.admin-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Başarı mesajı */
+.success-message {
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-weight: 500;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Ayar kutuları düzeni */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+/* Tek bir ayar kutusu */
+.setting-item {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Label */
+.setting-item label {
+  font-size: 15px;
+  color: #374151;
+  font-weight: 600;
+}
+
+/* Input */
+.setting-item input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  transition: border-color 0.2s;
+}
+
+.setting-item input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  background-color: white;
+}
+
+/* Kaydet Butonu */
+.setting-item button {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background-color: #4f46e5;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.setting-item button:hover {
+  background-color: #4338ca;
+}

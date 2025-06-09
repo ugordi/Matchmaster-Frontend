@@ -1,0 +1,177 @@
+/* AdminNews.css – Sadece admin paneline özel stiller */
+
+.admin-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f7f8fa;
+}
+
+.admin-sidebar {
+  width: 220px;
+  background-color: #1f1f2e;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.admin-sidebar-header {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-sidebar-item {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.admin-sidebar-item:hover {
+  background-color: #343454;
+}
+
+.admin-main-content {
+  flex: 1;
+  padding: 40px;
+}
+
+.admin-title {
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+/* Form alanı */
+.admin-news-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+
+.admin-news-form input,
+.admin-news-form textarea,
+.admin-news-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-news-form button {
+  padding: 12px;
+  background-color: #4caf50;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.admin-news-form button:hover {
+  background-color: #45a049;
+}
+
+/* Liste */
+.admin-news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-news-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.admin-news-image {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.admin-news-content {
+  flex: 1;
+}
+
+.admin-news-content h4 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #333;
+}
+
+.admin-news-content p {
+  color: #555;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.admin-league-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+/* Butonlar */
+.admin-news-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-news-actions button {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.admin-news-actions button:first-child {
+  background-color: #2196f3;
+}
+
+.admin-news-actions button:first-child:hover {
+  background-color: #1976d2;
+}
+
+.admin-news-actions button:last-child {
+  background-color: #f44336;
+}
+
+.admin-news-actions button:last-child:hover {
+  background-color: #d32f2f;
+}
