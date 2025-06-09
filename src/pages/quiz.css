@@ -56,6 +56,22 @@ body {
     animation: floatLogo 25s linear infinite;
 }
 
+.timer-bar-wrapper {
+  width: 100%;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.timer-bar {
+  height: 100%;
+  background-color: #4a90e2;
+  transition: width 0.1s linear;
+}
+
+
 @keyframes floatLogo {
     0% {
         transform: translate(0, 0) rotate(0deg) scale(1);

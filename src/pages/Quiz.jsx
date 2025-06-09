@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar"; // ✅ Burada dışarıdan Navbar import edildi
+import Navbar from "../components/Navbar";
 import "./quiz.css";
 
 const Quiz = () => {
@@ -12,6 +12,7 @@ const Quiz = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [noQuestions, setNoQuestions] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(20);
   const navigate = useNavigate();
 
   const BASE_URL = "http://localhost:5000";
@@ -57,13 +58,35 @@ const Quiz = () => {
     fetchQuiz();
   }, [navigate, token]);
 
+  useEffect(() => {
+    if (result || noQuestions || loading) return;
+    if (timeLeft === 0) {
+      handleAnswer(null);
+      return;
+    }
+    const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+    return () => clearInterval(timer);
+  }, [timeLeft, result, noQuestions, loading]);
+
+  useEffect(() => {
+    const preventExit = (e) => {
+      if (!result) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", preventExit);
+    return () => window.removeEventListener("beforeunload", preventExit);
+  }, [result]);
+
   const handleAnswer = (option) => {
     const selected = {
       quiz_id: questions[currentIndex].id,
-      selected_option: option,
+      selected_option: option ?? "null",
     };
     const updatedAnswers = [...answers, selected];
     setAnswers(updatedAnswers);
+    setTimeLeft(20);
 
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex(currentIndex + 1);
@@ -101,7 +124,9 @@ const Quiz = () => {
           <div className="question-card">
             <h2>Bu hafta için henüz quiz soruları eklenmedi.</h2>
             <div className="options-container">
-              <button onClick={() => navigate("/profile")} className="option-btn">👤 Profil Sayfası</button>
+              <button onClick={() => navigate("/profile")} className="option-btn">
+                👤 Profil Sayfası
+              </button>
             </div>
           </div>
         </div>
@@ -123,8 +148,12 @@ const Quiz = () => {
             <p>Kazandığınız Puan: {result.earned}</p>
           </div>
           <div className="result-buttons">
-            <button onClick={restart} className="restart-btn">🔁 Tekrar Dene</button>
-            <button onClick={() => navigate("/")} className="home-btn">🏠 Ana Sayfa</button>
+            <button onClick={restart} className="restart-btn">
+              🔁 Tekrar Dene
+            </button>
+            <button onClick={() => navigate("/")} className="home-btn">
+              🏠 Ana Sayfa
+            </button>
           </div>
         </div>
       </div>
@@ -140,6 +169,9 @@ const Quiz = () => {
         <div className="question-card">
           <div className="question-number">
             Soru {currentIndex + 1}/{questions.length}
+          </div>
+          <div className="timer-bar-wrapper">
+            <div className="timer-bar" style={{ width: `${(timeLeft / 20) * 100}%` }}></div>
           </div>
           <h2>{current.question}</h2>
           {current.image_url && (
