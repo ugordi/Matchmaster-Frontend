@@ -14,12 +14,13 @@ const Homepage = () => {
   useEffect(() => {
     const movingLogos = document.querySelector(".moving-logos");
     const teamLogos = [
-      "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",
-      "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",
-      "https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg",
-      "https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg",
-      "https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg",
-      "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg"
+      "https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg",   // Man City
+      "https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg",               // Liverpool
+      "https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg", // Man Utd
+      "https://img.sofascore.com/api/v1/team/3061/image", // Galatasaray (SVG)
+      "https://img.sofascore.com/api/v1/team/3052/image",          // Fenerbahçe 
+      "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg",              // Real Madrid
+      "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"    // Barcelona
     ];
 
     teamLogos.forEach((logo) => {
@@ -30,7 +31,7 @@ const Homepage = () => {
         logoDiv.style.left = `${Math.random() * 100}vw`;
         logoDiv.style.top = `${Math.random() * 100}vh`;
         logoDiv.style.animationDelay = `${Math.random() * 5}s`;
-        logoDiv.style.animationDuration = `${20 + Math.random() * 10}s`;
+        logoDiv.style.animationDuration = `${30 + Math.random() * 10}s`;
         movingLogos.appendChild(logoDiv);
       }
     });

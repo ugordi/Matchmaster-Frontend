@@ -24,6 +24,7 @@ import AdminLeagues from "./pages/AdminLeagues";
 import AdminTeams from "./pages/AdminTeams";
 import AdminMatches from "./pages/AdminMatches";
 import About from "./pages/About"
+import News from "./pages/News"
 
 
 const AppRoutes = () => {
@@ -53,6 +54,7 @@ const AppRoutes = () => {
       <Route path="/quiz" element={user ? <Quiz /> : <Navigate to="/login" />} />
       <Route path="/scoreboard" element={user ? <Scoreboard /> : <Navigate to="/login" />} />
       <Route path="/teams" element={user ? <Teams /> : <Navigate to="/login" />} />
+      <Route path="/news" element={user ? <News /> : <Navigate to="/news" />} />
       
 
       {/* 🔒 Admin rotaları */}

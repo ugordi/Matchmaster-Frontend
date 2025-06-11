@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Signup.css";
-import logo from "../logo.png"; // src/logo.png doğru yol
+import logo from "../logo.png";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const Signup = () => {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // form içi hata mesajı
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -28,51 +29,59 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    setErrorMessage("");
 
-  if (
-    !form.first_name ||
-    !form.last_name ||
-    !form.username ||
-    !form.email ||
-    !form.password ||
-    !form.passwordConfirm
-  ) {
-    return alert("Lütfen tüm alanları doldurun!");
-  }
-  if (form.password !== form.passwordConfirm) {
-    return alert("Şifreler eşleşmiyor!");
-  }
-  if (!form.terms) {
-    return alert("Kullanım koşullarını kabul etmelisiniz!");
-  }
-
-  try {
-    const res = await axios.post("http://localhost:5000/api/auth/signup", {
-      first_name: form.first_name,
-      last_name: form.last_name,
-      username: form.username,
-      email: form.email,
-      password: form.password,
-    });
-
-    if (res.data.success) {
-      // localStorage'a kullanıcı bilgisi ekle (JWT token vb. yoksa basit info)
-      localStorage.setItem("user", JSON.stringify({
-        email: form.email,
-        username: form.username
-      }));
-
-      navigate("/menu"); // doğrudan menüye yönlendir
-    } else {
-      alert(res.data.error || "Bir hata oluştu.");
+    if (
+      !form.first_name ||
+      !form.last_name ||
+      !form.username ||
+      !form.email ||
+      !form.password ||
+      !form.passwordConfirm
+    ) {
+      return setErrorMessage("Lütfen tüm alanları doldurun.");
     }
-  } catch (err) {
-    console.error("Signup error:", err);
-    alert("Sunucu hatası. Lütfen daha sonra tekrar deneyin.");
-  }
-};
 
+    if (form.password.length < 8) {
+      return setErrorMessage("Şifreniz en az 8 karakter uzunluğunda olmalıdır.");
+    }
+
+    if (form.password !== form.passwordConfirm) {
+      return setErrorMessage("Şifreler eşleşmiyor.");
+    }
+
+    if (!form.terms) {
+      return setErrorMessage("Kullanım koşullarını kabul etmelisiniz.");
+    }
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+        first_name: form.first_name,
+        last_name: form.last_name,
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      });
+
+      if (res.data.success) {
+        localStorage.setItem("user", JSON.stringify({
+          email: form.email,
+          username: form.username
+        }));
+        navigate("/menu");
+      } else {
+        setErrorMessage(res.data.error || "Bir hata oluştu.");
+      }
+    } catch (err) {
+      console.error("Signup error:", err);
+      if (err.response && err.response.data && err.response.data.error) {
+        setErrorMessage(err.response.data.error);
+      } else {
+        setErrorMessage("Sunucu hatası. Lütfen daha sonra tekrar deneyin.");
+      }
+    }
+  };
 
   return (
     <div className="signup-container">
@@ -90,6 +99,12 @@ const Signup = () => {
         </div>
 
         <form className="signup-form" onSubmit={handleSubmit}>
+          {errorMessage && (
+            <div className="form-error">
+              {errorMessage}
+            </div>
+          )}
+
           <div className="input-group">
             <i className="fas fa-user-circle"></i>
             <input
@@ -177,7 +192,6 @@ const Signup = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -186,8 +200,7 @@ const Signup = () => {
               Bu uygulamayı kullanarak, sağlanan bilgilerin doğru olduğunu,
               sistemin adil kullanım şartlarına uyacağınızı ve üçüncü şahıslara
               zarar vermeyeceğinizi kabul etmiş olursunuz.
-              <br />
-              <br />
+              <br /><br />
               Hesabınız size özeldir, paylaşılması önerilmez. Her türlü kötüye
               kullanım durumunda hesabınız askıya alınabilir.
             </p>

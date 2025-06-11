@@ -86,6 +86,7 @@ const Navbar = () => {
           <>
             <div className="nav-links">
               <a href="/menu">Maçlar</a>
+              <a href="/news">Haberler</a>
               <a href="/scoreboard">Skor Tablosu</a>
             </div>
             <div className="profile-section">

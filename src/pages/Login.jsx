@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
-import logo from "../logo.png"; // LOGO BURADA İMPORT EDİLDİ
+import logo from "../logo.png";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Form içi hata mesajı
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+
     if (!email || !password) {
-      alert("Lütfen tüm alanları doldurun");
+      setErrorMessage("Lütfen tüm alanları doldurun.");
       return;
     }
 
@@ -25,15 +28,17 @@ const Login = () => {
 
       const data = res.data;
 
-      // Token ve kullanıcı bilgisi localStorage'a yazılır
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // Giriş sonrası yönlendirme
       navigate("/menu");
     } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.error || "Sunucu hatası");
+      console.error("Login error:", err);
+      if (err.response?.data?.error) {
+        setErrorMessage(err.response.data.error); // Özel hata mesajını göster
+      } else {
+        setErrorMessage("Sunucu hatası. Lütfen daha sonra tekrar deneyin.");
+      }
     }
   };
 
@@ -53,6 +58,12 @@ const Login = () => {
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
+          {errorMessage && (
+            <div className="form-error">
+              {errorMessage}
+            </div>
+          )}
+
           <div className="input-group">
             <i className="fas fa-envelope"></i>
             <input
@@ -75,7 +86,7 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="login-btn">
+          <button type="submit" className="login-btn animated-btn">
             Giriş Yap
           </button>
         </form>

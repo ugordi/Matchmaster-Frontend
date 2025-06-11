@@ -3,18 +3,22 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import defaultUserImage from "../kullanıcı.png";
+import { FaStar } from "react-icons/fa";
+import Modal from "react-modal";
 import "./Profile.css";
+
+Modal.setAppElement("#root");
 
 const Profile = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [passwordForm, setPasswordForm] = useState({ currentPassword: "", newPassword: "" });
   const [successMessage, setSuccessMessage] = useState("");
+  const [modalData, setModalData] = useState(null);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const config = { headers: { Authorization: `Bearer ${token}` } };
-  const currentUser = JSON.parse(localStorage.getItem("user")) || {};
 
   useEffect(() => {
     if (!token) {
@@ -127,15 +131,20 @@ const Profile = () => {
               {favorites.teams.length > 0 ? favorites.teams.map(team => (
                 <div key={team.id} className="fav-item">
                   <span>{team.name}</span>
-                  <i className="fas fa-star" onClick={() => toggleFavorite("favorite-team", team.id, true)}></i>
+                  <FaStar className="fav-icon" onClick={() => toggleFavorite("favorite-team", team.id, true)} />
                 </div>
               )) : <p>Favori takım bulunamadı.</p>}
 
               <h3>📰 Favori Haberler</h3>
               {favorites.news.length > 0 ? favorites.news.map(news => (
                 <div key={news.id} className="fav-item">
-                  <span>{news.title}</span>
-                  <i className="fas fa-star" onClick={() => toggleFavorite("favorite-news", news.id, true)}></i>
+                  <span
+                    className="clickable"
+                    onClick={() => setModalData(news)}
+                  >
+                    {news.title}
+                  </span>
+                  <FaStar className="fav-icon" onClick={() => toggleFavorite("favorite-news", news.id, true)} />
                 </div>
               )) : <p>Favori haber bulunamadı.</p>}
             </div>
@@ -159,6 +168,21 @@ const Profile = () => {
             </div>
           </div>
         </div>
+
+        {modalData && (
+          <Modal
+            isOpen={!!modalData}
+            onRequestClose={() => setModalData(null)}
+            className="modal-content"
+            overlayClassName="modal-overlay"
+          >
+            <button className="modal-close-btn" onClick={() => setModalData(null)}>×</button>
+            <h2>{modalData.title}</h2>
+            <p><strong>Lig:</strong> {modalData.league_name}</p>
+            <p><strong>Tarih:</strong> {new Date(modalData.created_at).toLocaleDateString()}</p>
+            <p>{modalData.content}</p>
+          </Modal>
+        )}
       </main>
     </div>
   );

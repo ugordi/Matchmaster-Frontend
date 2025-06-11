@@ -243,3 +243,116 @@ body {
 .admin-panel-button:hover {
   background-color: #e0e0e0;
 }
+
+/* === Modal (Haber Detayları) === */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  color: #fff;
+  position: relative;
+}
+
+.modal-content h2 {
+  font-size: 20px;
+  color: #4fc3f7;
+  margin-bottom: 1rem;
+}
+
+.modal-content p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+.modal-footer {
+  margin-top: 1rem;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  color: #bbb;
+  border-top: 1px solid #333;
+  padding-top: 0.5rem;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: -12px;  /* Yukarı taşındı */
+  right: -12px;  /* Sağa taşındı */
+  font-size: 22px;
+  color: #f44336;
+  background: #1e1e1e;
+  border: 2px solid #f44336;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.1);
+  background-color: #2c2c2c;
+}
+
+
+/* === Favori Yıldız Animasyonu === */
+.fav-item i,
+.favorite-icon svg {
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.fav-item i:hover,
+.favorite-icon svg:hover {
+  transform: scale(1.2);
+  color: #ffd700;
+}
+
+/* Modal içeriği başlık, metin ve düğmeyle uyumlu hale geldi */
+.modal-content h2 {
+  font-size: 20px;
+  margin-bottom: 1rem;
+  color: #4fc3f7;
+}
+
+.modal-content p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+.modal-content button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-content button:hover {
+  background-color: #1976d2;
+}
