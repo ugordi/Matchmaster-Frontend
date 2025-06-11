@@ -17,6 +17,8 @@ const AdminMatches = () => {
   const [editingId, setEditingId] = useState(null);
   const [selectedLeague, setSelectedLeague] = useState('');
   const [selectedWeek, setSelectedWeek] = useState('');
+  const [showScoreModal, setShowScoreModal] = useState(false);
+  const [scoreInputs, setScoreInputs] = useState({ match_id: null, home_score: '', away_score: '' });
 
   useEffect(() => {
     fetchMatches();
@@ -65,12 +67,16 @@ const AdminMatches = () => {
 
   const handleSubmit = async () => {
     try {
+      const payload = {
+        ...form,
+        match_date: new Date(form.match_date).toISOString().slice(0, 19).replace('T', ' ')
+      };
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/admin/matches/${editingId}`, form, {
+        await axios.put(`http://localhost:5000/api/admin/matches/${editingId}`, payload, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
       } else {
-        await axios.post('http://localhost:5000/api/admin/matches', form, {
+        await axios.post('http://localhost:5000/api/admin/matches', payload, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
       }
@@ -125,12 +131,28 @@ const AdminMatches = () => {
     }
   };
 
-    return (
+  const handleScoreFinish = (matchId) => {
+    setScoreInputs({ match_id: matchId, home_score: '', away_score: '' });
+    setShowScoreModal(true);
+  };
+
+  const handleScoreSubmit = async () => {
+    try {
+      await axios.post('http://localhost:5000/api/admin/finish-match', scoreInputs, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      setShowScoreModal(false);
+      fetchMatches();
+    } catch (err) {
+      console.error('Maçı bitirme hatası:', err);
+    }
+  };
+
+  return (
     <div className="admin-matches-container">
       <AdminSidebar />
       <main className="admin-matches-content">
         <h2 className="admin-matches-title">⚽ Maç Yönetimi</h2>
-
         <div className="admin-matches-filters">
           <select value={selectedLeague} onChange={(e) => setSelectedLeague(e.target.value)}>
             <option value="">Tüm Ligler</option>
@@ -176,6 +198,28 @@ const AdminMatches = () => {
           </div>
         )}
 
+        {showScoreModal && (
+          <div className="modal">
+            <div>
+              <h3>Maç Skoru Gir</h3>
+              <input
+                type="number"
+                placeholder="Ev Sahibi Skoru"
+                value={scoreInputs.home_score}
+                onChange={(e) => setScoreInputs({ ...scoreInputs, home_score: e.target.value })}
+              />
+              <input
+                type="number"
+                placeholder="Deplasman Skoru"
+                value={scoreInputs.away_score}
+                onChange={(e) => setScoreInputs({ ...scoreInputs, away_score: e.target.value })}
+              />
+              <button onClick={handleScoreSubmit}>Kaydet ve Bitir</button>
+              <button onClick={() => setShowScoreModal(false)}>İptal</button>
+            </div>
+          </div>
+        )}
+
         <div className="admin-matches-list">
           {filteredMatches.map((match) => (
             <div key={match.id} className="admin-matches-card">
@@ -191,6 +235,9 @@ const AdminMatches = () => {
               <div className="admin-matches-actions">
                 <button onClick={() => handleEdit(match)}>Düzenle</button>
                 <button onClick={() => handleDelete(match.id)}>Sil</button>
+                {match.status === 'upcoming' && (
+                  <button onClick={() => handleScoreFinish(match.id)}>Maçı Bitir</button>
+                )}
               </div>
             </div>
           ))}

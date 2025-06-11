@@ -187,3 +187,76 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Modal Arka Planı */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal İçeriği */
+.modal > div {
+  background-color: white;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+
+.modal h3 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+  font-size: 20px;
+}
+
+/* Skor Inputları */
+.modal input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* Modal Butonlar */
+.modal button {
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Kaydet ve Bitir Butonu */
+.modal button:nth-child(4) {
+  background-color: #10b981;
+  color: white;
+}
+
+.modal button:nth-child(4):hover {
+  background-color: #059669;
+}
+
+/* İptal Butonu */
+.modal button:nth-child(5) {
+  background-color: #f87171;
+  color: white;
+}
+
+.modal button:nth-child(5):hover {
+  background-color: #dc2626;
+}
