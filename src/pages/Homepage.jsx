@@ -40,7 +40,7 @@ const Homepage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const newsRes = await axios.get(`${BASE_URL}/news`);
+        const newsRes = await axios.get(`${BASE_URL}/news/recent`);
         setNews(newsRes.data.news);
 
         const statsRes = await axios.get(`${BASE_URL}/site-statistics`);
