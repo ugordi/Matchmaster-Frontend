@@ -15,6 +15,7 @@ const AdminSidebar = () => {
         <button className="admin-sidebar-item" onClick={() => window.location.href = '/admin/matches'}>Maçlar</button>
         <button className="admin-sidebar-item" onClick={() => window.location.href = '/admin/leagues'}>Ligler</button>
         <button className="admin-sidebar-item" onClick={() => window.location.href = '/admin/teams'}>Takımlar</button>
+        <button className="admin-sidebar-item" onClick={() => window.location.href = '/admin/predictions'}>Tahminler</button>
         <hr className="admin-sidebar-divider" />
         <button className="admin-sidebar-item homepage-button" onClick={() => window.location.href = '/'}>🏠 Ana Sayfa</button>
       </div>

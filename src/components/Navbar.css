@@ -62,12 +62,14 @@
 }
 
 .search-box {
+  position: relative; /* önemli! dropdown'ı bu kutuya göre hizalayacağız */
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 30px;
   padding: 0.4rem 1rem;
   transition: all 0.3s ease;
+  width: 280px; /* kutunun sabit genişliğini buraya tanımla */
 }
 
 .search-box i {
@@ -302,4 +304,67 @@
 
 .nav-links a:hover::before {
   width: 60%;
+}
+
+
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%; /* arama kutusuyla aynı genişlikte */
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 99;
+  padding: 0;
+  list-style: none;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+.search-dropdown li {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 14px 18px; /* YÜKSEKLİK ARTIRILDI */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  position: relative;
+  font-size: 1rem; /* biraz okunaklılık için artırılabilir */
+  line-height: 1.5;
+}
+
+.search-dropdown li:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--primary-color);
+}
+
+.search-dropdown li::before {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.search-dropdown li:hover::before {
+  width: 60%;
+}
+
+.search-dropdown img {
+  width: 22px;
+  height: 22px;
+  margin-right: 12px;
+  object-fit: contain;
+  border-radius: 4px;
 }

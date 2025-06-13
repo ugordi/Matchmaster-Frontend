@@ -1,0 +1,124 @@
+.admin-predictions-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7fa;
+  color: #2c3e50;
+}
+
+.admin-predictions-main-content {
+  flex: 1;
+  padding: 40px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.admin-predictions-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Match list */
+.admin-predictions-match-list {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.admin-predictions-subtitle {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #333;
+}
+
+.admin-predictions-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-predictions-match-item {
+  padding: 12px 16px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  color: #2c3e50;
+  border: 1px solid #ddd;
+}
+
+.admin-predictions-match-item:hover {
+  background-color: #f0f4ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.admin-predictions-selected {
+  background-color: #dbe9ff;
+  font-weight: bold;
+  border-color: #a4c6ff;
+}
+
+/* Prediction details */
+.admin-predictions-details {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.admin-predictions-match-title {
+  font-size: 22px;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.admin-predictions-summary {
+  background-color: #eafaf1;
+  border: 1px solid #b4deb7;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.admin-predictions-summary p {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+/* Prediction Table */
+.admin-predictions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.admin-predictions-table th,
+.admin-predictions-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.admin-predictions-table th {
+  background-color: #f0f4f8;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.admin-predictions-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.admin-predictions-table td {
+  color: #444;
+  font-size: 15px;
+}

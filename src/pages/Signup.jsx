@@ -65,11 +65,8 @@ const Signup = () => {
       });
 
       if (res.data.success) {
-        localStorage.setItem("user", JSON.stringify({
-          email: form.email,
-          username: form.username
-        }));
-        navigate("/menu");
+        localStorage.setItem("user_email", form.email); // verify ekranında lazım olacak
+        navigate("/verify");
       } else {
         setErrorMessage(res.data.error || "Bir hata oluştu.");
       }

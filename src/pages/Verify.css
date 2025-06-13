@@ -1,0 +1,90 @@
+/* Koyu temalı doğrulama sayfası */
+.verify-container {
+  background-color: #121212;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.verify-card {
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 255, 170, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.verify-logo {
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+.verify-card h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #00ffab;
+}
+
+.verify-card p {
+  margin-bottom: 20px;
+  color: #aaa;
+}
+
+.verify-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #222;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+}
+
+.verify-card input::placeholder {
+  color: #666;
+}
+
+.verify-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #00ffab;
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.verify-card button:hover {
+  background-color: #00e6a0;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.verify-error {
+  color: #ff6b6b;
+  margin-bottom: 10px;
+}
+
+.verify-success {
+  color: #00ffab;
+  margin-bottom: 10px;
+}

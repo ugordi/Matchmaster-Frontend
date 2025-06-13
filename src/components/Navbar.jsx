@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../logo.png";
 import "./Navbar.css";
 
-const BASE_URL = "http://localhost:5000/api/public";
+const BASE_URL = "http://localhost:5000/api";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -12,9 +12,13 @@ const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const navigate = useNavigate();
+  const dropdownRef = useRef();
 
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -36,9 +40,18 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleLogoClick = () => {
-    const currentUser = localStorage.getItem("user");
-    window.location.href = currentUser ? "/" : "/";
+    window.location.href = "/";
   };
 
   const logout = () => {
@@ -52,16 +65,29 @@ const Navbar = () => {
   const handleSearchChange = async (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    if (value.trim()) {
-      try {
-        const res = await axios.get(`${BASE_URL}/teams/search?q=${value}`);
-        if (res.data.success) {
-          console.log("Arama Sonuçları:", res.data.results);
-        }
-      } catch (err) {
-        console.error("Arama hatası:", err);
-      }
+
+    if (value.trim().length === 0) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
     }
+
+    try {
+      const res = await axios.get(`${BASE_URL}/team/search?q=${value}`);
+      if (res.data.success) {
+        setSearchResults(res.data.results.slice(0, 8));
+        setShowDropdown(true);
+      }
+    } catch (err) {
+      console.error("Arama hatası:", err);
+    }
+  };
+
+  const handleResultClick = (teamId) => {
+    setSearchTerm("");
+    setSearchResults([]);
+    setShowDropdown(false);
+    navigate(`/team/${teamId}`);
   };
 
   return (
@@ -72,14 +98,27 @@ const Navbar = () => {
           <span>MatchMaster</span>
         </div>
 
-        <div className="search-box">
+        <div className="search-box" ref={dropdownRef}>
           <i className="fas fa-search"></i>
           <input
             type="text"
-            placeholder="Takım, lig veya maç ara..."
+            placeholder="Takım ara..."
             value={searchTerm}
             onChange={handleSearchChange}
+            onFocus={() => {
+              if (searchResults.length > 0) setShowDropdown(true);
+            }}
           />
+          {showDropdown && searchResults.length > 0 && (
+            <ul className="search-dropdown">
+              {searchResults.map((team) => (
+                <li key={team.id} onClick={() => handleResultClick(team.id)}>
+                  <img src={team.logo_url} alt={team.name} />
+                  <span>{team.name}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {isLoggedIn ? (

@@ -16,13 +16,13 @@ const About = () => {
       title: "Hakkımızda",
       description: `Bu proje, yazılım mühendisliği öğrencileri Uğur Can Bayrak, Kemal Özbay, Yasin Aydemir ve Ramis Eray Altıntaş tarafından hayata geçirilmiştir. Amacımız, yapay zekâ ve makine öğrenmesi teknolojilerini spor gibi heyecan verici bir alana entegre ederek, kullanıcı deneyimini farklı bir boyuta taşımaktır. MatchMaster ile futbol artık yalnızca izlenen bir oyun değil; istatistiklerle analiz edilen, tahminlerle şekillenen, quizler ve puan sistemleriyle eğlenceli bir rekabete dönüşen bir deneyimdir. Futbolun teknolojiyle buluştuğu bu yolculukta siz de yerinizi alın!`,
       team: "Takımımız",
-      contact: "İletişim: matchmaster@gmail.com",
+      contact: "İletişim: matchaimaster@gmail.com",
     },
     en: {
       title: "About Us",
       description: `This project was developed by software engineering students Uğur Can Bayrak, Kemal Özbay, Yasin Aydemir, and Ramis Eray Altıntaş. Our goal is to integrate artificial intelligence and machine learning into the exciting world of sports to elevate the user experience to a whole new level. With MatchMaster, football becomes more than just a game to watch — it becomes an engaging, data-driven experience shaped by predictions, enriched with quizzes, and gamified through a point system. Join us on this journey where football meets technology!`,
       team: "Our Team",
-      contact: "Contact: matchmaster@gmail.com",
+      contact: "Contact: matchaimaster@gmail.com",
     }
   };
 

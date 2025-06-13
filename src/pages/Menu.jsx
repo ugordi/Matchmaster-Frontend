@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import Navbar from "../components/Navbar";
 import "./menu.css";
+
+import { useNavigate as useNav } from "react-router-dom";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -27,7 +29,7 @@ function Menu() {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     if (!currentUser) return navigate("/login");
     fetchLeagues();
-    fetchUserPredictions();
+    
   }, []);
 
   useEffect(() => {
@@ -37,6 +39,12 @@ function Menu() {
   useEffect(() => {
     if (selectedLeague && selectedWeek) fetchMatches(selectedLeague, selectedWeek);
   }, [selectedWeek, selectedLeague]);
+
+  useEffect(() => {
+  if (matches.length > 0) {
+    
+  }
+}, [matches]);
 
   const fetchLeagues = async () => {
     const res = await axios.get(`${BASE_MATCH_URL}/leagues`);
@@ -55,42 +63,67 @@ function Menu() {
     }
   };
 
-  const fetchMatches = async (league_id, week) => {
-    const res = await axios.get(`${BASE_MATCH_URL}/week/${week}?league_id=${league_id}`);
-    if (res.data.success) setMatches(res.data.matches);
-  };
 
-  const fetchUserPredictions = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+
+ const fetchMatches = async (league_id, week) => {
+  const token = localStorage.getItem("token");
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const userId = currentUser?.id; // ✅ DOĞRU OLAN BU
+
+  const res = await axios.get(`${BASE_MATCH_URL}/week/${week}?league_id=${league_id}`);
+  if (!res.data.success) return;
+
+  const matchesData = res.data.matches;
+
+  let predictionsMap = {};
+  if (token && userId) {
     try {
-      const res = await axios.get(BASE_PREDICT_URL, {
+      const preds = await axios.get(`${BASE_PREDICT_URL}/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (res.data.success) {
-        const predMap = {};
-        res.data.predictions.forEach(pred => {
-          predMap[pred.match_id] = pred.predicted_result;
+
+      if (Array.isArray(preds.data)) {
+        preds.data.forEach(p => {
+          predictionsMap[p.match_id] = p.predicted_result;
         });
-        setUserPredictions(predMap);
       }
+
+
     } catch (err) {
       console.error("Tahminler alınamadı:", err);
     }
-  };
+  }
 
-  const submitPrediction = async (match_id, result) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-    try {
-      await axios.post(BASE_PREDICT_URL, { match_id, predicted_result: result }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setUserPredictions(prev => ({ ...prev, [match_id]: result }));
-    } catch (err) {
-      console.error("Tahmin yapılamadı:", err);
-    }
-  };
+  const enriched = matchesData.map(m => ({
+    ...m,
+    user_prediction: predictionsMap[m.id] || null,
+  }));
+
+  setMatches(enriched);
+};
+
+  
+
+
+const submitPrediction = async (match_id, result) => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  try {
+    await axios.post(BASE_PREDICT_URL, { match_id, predicted_result: result }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    // Tahmini ekranda anında yansıt
+    setMatches(prev =>
+      prev.map(m =>
+        m.id === match_id ? { ...m, user_prediction: result } : m
+      )
+    );
+  } catch (err) {
+    console.error("Tahmin yapılamadı:", err);
+  }
+};
 
   const toggleBotPrediction = (matchId) => {
     setShowBotPredictions(prev => ({ ...prev, [matchId]: !prev[matchId] }));
@@ -138,7 +171,7 @@ function Menu() {
                 </div>
 
                 <div className="match-teams">
-                  <div className="team">
+                  <div className="team" onClick={() => navigate(`/team/${match.home_team_id}`)} style={{ cursor: 'pointer' }}>
                     <img src={match.home_logo || "/logos/default.png"} alt={match.home_team} />
                     <span className="team-name">{match.home_team}</span>
                   </div>
@@ -150,33 +183,38 @@ function Menu() {
                       </div>
                     )}
                   </div>
-                  <div className="team">
+                  <div className="team" onClick={() => navigate(`/team/${match.away_team_id}`)} style={{ cursor: 'pointer' }}>
                     <img src={match.away_logo || "/logos/default.png"} alt={match.away_team} />
                     <span className="team-name">{match.away_team}</span>
                   </div>
                 </div>
 
                 {match.status !== 'finished' && (
-                  <div className="prediction-buttons">
+                  <>
+                    <div className="prediction-label">Sen Tahminini Yap</div>
+                    <div className="prediction-buttons">
                     <button
-                      className={userPredictions[match.id] === 'home_team' ? 'selected' : ''}
+                      className={match.user_prediction === 'home_team' ? 'selected' : ''}
                       onClick={() => submitPrediction(match.id, 'home_team')}
                     >
                       {match.home_team}
                     </button>
+
                     <button
-                      className={userPredictions[match.id] === 'draw' ? 'selected' : ''}
+                      className={match.user_prediction === 'draw' ? 'selected' : ''}
                       onClick={() => submitPrediction(match.id, 'draw')}
                     >
                       Beraberlik
                     </button>
+
                     <button
-                      className={userPredictions[match.id] === 'away_team' ? 'selected' : ''}
+                      className={match.user_prediction === 'away_team' ? 'selected' : ''}
                       onClick={() => submitPrediction(match.id, 'away_team')}
                     >
                       {match.away_team}
                     </button>
-                  </div>
+                    </div>
+                  </>
                 )}
 
                 {match.status === 'finished' || showBotPredictions[match.id] ? (
