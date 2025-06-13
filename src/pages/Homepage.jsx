@@ -183,8 +183,8 @@ const Homepage = () => {
             <div className="footer-links">
               <a href="/about">Hakkımızda</a>
               <a href="/contact">İletişim</a>
-              <a href="#">Gizlilik Politikası</a>
-              <a href="#">Kullanım Şartları</a>
+              <a href="/privacy">Gizlilik Politikası</a>
+              <a href="/termsofuse">Kullanım Şartları</a>
             </div>
           </div>
         </div>

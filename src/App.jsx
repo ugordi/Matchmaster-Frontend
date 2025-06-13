@@ -28,6 +28,8 @@ import News from "./pages/News"
 import Verify from "./pages/Verify";
 import Contact from './pages/Contact';
 import AdminPredictions from "./pages/AdminPredictions";
+import Privacy from './pages/Privacy';
+import TermsOfUse from './pages/Terms';
 
 
 
@@ -52,6 +54,8 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/verify" element={<Verify />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/termsofuse" element={<TermsOfUse/>} />
 
 
 
