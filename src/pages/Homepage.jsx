@@ -127,6 +127,26 @@ const Homepage = () => {
             </div>
           </section>
 
+          <section className="roadmap-section">
+            <h2 className="roadmap-title">🚀 Yol Haritamız</h2>
+            <div className="roadmap-container">
+              {[
+                "Sitenin aktif edilmesi",
+                "Sosyal medyada reklamların yapılması",
+                "Abonelik & ödeme sisteminin eklenmesi",
+                "UEFA Şampiyonlar Ligi, Premier Lig gibi liglerin entegre edilmesi",
+                "Mobil uygulamanın çıkarılması"
+              ].map((step, index) => (
+                <div className="roadmap-step" key={index}>
+                  {index !== 0 && <div className="roadmap-arrow" />}
+                  <div className="roadmap-player" />
+                  <p>{step}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+
           <section className="news-section">
             <h2>Son Haberler</h2>
             <ul className="news-list">

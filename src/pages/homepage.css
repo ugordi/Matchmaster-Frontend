@@ -1139,3 +1139,144 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(92, 107, 192, 0.45);
 }
+
+.roadmap-section {
+  padding: 80px 20px;
+  background-color: #1a1a1a;
+  border-top: 2px solid var(--primary-color);
+  margin-top: 80px;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.roadmap-title {
+  text-align: center;
+  font-size: 32px;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 60px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(74, 144, 226, 0.6);
+}
+
+.roadmap-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.roadmap-step {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  border-radius: 18px;
+  width: 180px;
+  padding: 20px 10px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.roadmap-step:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 0 25px rgba(74, 144, 226, 0.4);
+  z-index: 3;
+}
+
+.roadmap-step:hover .roadmap-player {
+  animation: bounceBall 0.5s ease;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+
+.roadmap-step:hover .roadmap-arrow {
+  background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+  animation: pulseArrow 1.4s infinite;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+.roadmap-step p {
+  margin-top: 14px;
+  font-size: 15px;
+  color: #e0e0e0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Topa vuran adam */
+.roadmap-player {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  background-image: url('../vuranadam.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+/* Pas oku efekti */
+.roadmap-arrow {
+  position: absolute;
+  top: 45px;
+  left: -50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.roadmap-step:first-child .roadmap-arrow {
+  display: none;
+}
+
+/* Animasyonlar */
+@keyframes pulseArrow {
+  0% {
+    box-shadow: 0 0 0 rgba(255, 82, 82, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(255, 82, 82, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(255, 82, 82, 0.2);
+  }
+}
+
+@keyframes bounceBall {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  30% {
+    transform: scale(1.1) translateY(-6px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .roadmap-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .roadmap-step {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .roadmap-arrow {
+    display: none;
+  }
+}
+
