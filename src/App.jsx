@@ -30,6 +30,7 @@ import Contact from './pages/Contact';
 import AdminPredictions from "./pages/AdminPredictions";
 import Privacy from './pages/Privacy';
 import TermsOfUse from './pages/Terms';
+import AdminSystemPred from "./pages/AdminSystemPred";
 
 
 
@@ -78,7 +79,7 @@ const AppRoutes = () => {
       <Route path="/admin/teams" element={isAdmin ? <AdminTeams /> : <Navigate to="/" />} /> {/* ✅ yeni */}
       <Route path="/admin/matches" element={isAdmin ? <AdminMatches /> : <Navigate to="/" />} /> {/* ✅ yeni */}
       <Route path="/admin/predictions" element={isAdmin ? <AdminPredictions /> : <Navigate to="/" />} /> {/* ✅ yeni */}
-
+      <Route path="/admin/system-predictions" element={isAdmin ? <AdminSystemPred /> : <Navigate to="/" />} /> {/* ✅ yeni */}
 
 
 

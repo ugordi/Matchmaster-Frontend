@@ -9,6 +9,9 @@ const AdminPredictions = () => {
   const [predictions, setPredictions] = useState([]);
   const [summary, setSummary] = useState(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const matchesPerPage = 10;
+
   useEffect(() => {
     fetchMatches();
   }, []);
@@ -36,6 +39,13 @@ const AdminPredictions = () => {
     }
   };
 
+    // Pagination için
+    const indexOfLastMatch = currentPage * matchesPerPage;
+    const indexOfFirstMatch = indexOfLastMatch - matchesPerPage;
+    const currentMatches = matches.slice(indexOfFirstMatch, indexOfLastMatch);
+    const totalPages = Math.ceil(matches.length / matchesPerPage);
+
+    
   return (
     <div className="admin-predictions-page">
       <AdminSidebar />
@@ -45,7 +55,7 @@ const AdminPredictions = () => {
         <div className="admin-predictions-match-list">
           <h3 className="admin-predictions-subtitle">Maçlar</h3>
           <ul className="admin-predictions-ul">
-            {matches.map(match => (
+            {currentMatches.map(match => (
               <li
                 key={match.id}
                 className={`admin-predictions-match-item ${selectedMatch?.id === match.id ? "admin-predictions-selected" : ""}`}
@@ -58,6 +68,17 @@ const AdminPredictions = () => {
               </li>
             ))}
           </ul>
+          <div className="admin-pagination">
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                className={`admin-pagination-btn${currentPage === i + 1 ? " active" : ""}`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
 
         {selectedMatch && (
